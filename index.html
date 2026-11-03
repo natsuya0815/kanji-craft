@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="漢字クラフト" />
 <meta name="robots" content="noindex,nofollow" />
-<title>漢字クラフト・サバイバル Ver.18 | 自動判定・タップ改善</title>
+<title>漢字クラフト・サバイバル Ver.19 | 自動判定・タップ改善</title>
 <style>
 :root{--bg:#0c1425;--bg2:#142541;--card:#172946;--line:#46617c;--ink:#f1f6ff;--muted:#aec3db;--sun:#ffd17d;--mint:#78f0c2;--red:#ff899c;--blue:#91bfff}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);font-family:system-ui,-apple-system,"Hiragino Sans","Yu Gothic",Meiryo,sans-serif;line-height:1.5;background:radial-gradient(ellipse at 13% 0%,#25446b 0%,transparent 40%),radial-gradient(ellipse at 95% 32%,#183954 0%,transparent 42%),var(--bg);min-height:100vh}
@@ -377,8 +377,10 @@ body.in-game #score{font-size:clamp(13px,2.3dvh,20px)}
 .wordCell.given{background:#30445d;color:#b6c9d8;border-color:#63819c;box-shadow:none}
 @media(max-width:580px){.scopeChoices{gap:4px}.scopeBtn{padding:8px 4px;min-height:63px}.scopeBtn b{font-size:12px}.scopeBtn small{font-size:10px}}
 
-/* Ver.18: Suppress double-tap zoom on iOS Safari without disabling pinch zoom. */
+/* Ver.19: iOS Safari fallback. WebKit versions may ignore manipulation for double-tap. */
 html,body,button,#battle,#battle *{touch-action:manipulation}
+/* Only actual puzzle controls need strong gesture exclusion; leave page scrolling available elsewhere. */
+#battle .partButton,#battle .assemblyRegion{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 #battle button{-webkit-tap-highlight-color:transparent}
 #battle .partButton:disabled{opacity:.55;box-shadow:none}
 #battle .action{justify-content:center;margin-top:12px}
@@ -386,7 +388,7 @@ html,body,button,#battle,#battle *{touch-action:manipulation}
 </style>
 </head>
 <body>
-<header><div class="head"><div class="logo">⚒️ 漢字クラフト・サバイバル<small>第1期 30字 × BOSS 20 SEC · Ver.18</small></div><div class="headtag">ふつう15秒・難しい10秒・鬼8秒／ボス20秒</div></div></header>
+<header><div class="head"><div class="logo">⚒️ 漢字クラフト・サバイバル<small>第1期 30字 × BOSS 20 SEC · Ver.19</small></div><div class="headtag">ふつう15秒・難しい10秒・鬼8秒／ボス20秒</div></div></header>
 <main>
 <section id="home">
  <div class="hero">
@@ -865,6 +867,51 @@ $('importFile').onchange=async e=>{
  e.target.value='';
 };
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){todayRecord();if($('home')&&!$('home').hidden)updateHome();}});
-document.getElementById('battle').addEventListener('dblclick',e=>e.preventDefault(),{passive:false});
+// Ver.19: Block iOS Safari's native double-tap zoom before it fires.
+// `dblclick.preventDefault()` happens too late; `touch-action:manipulation` alone
+// has been unreliable in some WebKit releases. Do not disable pinch zoom globally.
+(function protectRapidTaps(){
+ const battle=document.getElementById('battle');
+ let previousTap=null, activeTap=null;
+ const maxDelay=360, maxGap=50, maxMove=24;
+ const distance=(x,y,t)=>Math.hypot(x-t.clientX,y-t.clientY);
+ battle.addEventListener('touchstart',e=>{
+   if(e.touches.length!==1 || e.changedTouches.length!==1){previousTap=null;activeTap=null;return;}
+   const t=e.changedTouches[0], now=performance.now();
+   const secondTap=!!previousTap && (now-previousTap.at<=maxDelay) && distance(previousTap.x,previousTap.y,t)<=maxGap;
+   activeTap={id:t.identifier,x:t.clientX,y:t.clientY,at:now,secondTap,moved:false};
+   // Prevent the browser from recognizing a second tap as a zoom gesture.
+   // This also suppresses the second native click, which is replayed at touchend.
+   if(secondTap && e.cancelable)e.preventDefault();
+ },{passive:false});
+ battle.addEventListener('touchmove',e=>{
+   if(!activeTap)return;
+   for(const t of e.changedTouches){
+     if(t.identifier===activeTap.id && distance(activeTap.x,activeTap.y,t)>maxMove)activeTap.moved=true;
+   }
+ },{passive:true});
+ battle.addEventListener('touchend',e=>{
+   if(!activeTap)return;
+   let t=null;
+   for(const changed of e.changedTouches){if(changed.identifier===activeTap.id){t=changed;break;}}
+   if(!t)return;
+   const now=performance.now();
+   const tapped=!activeTap.moved && distance(activeTap.x,activeTap.y,t)<=maxMove && now-activeTap.at<650;
+   if(activeTap.secondTap){
+     if(e.cancelable)e.preventDefault();
+     // Keep quick, deliberate taps on neighboring parts playable, not swallowed.
+     // A second tap on an already-used part is harmless (its button is disabled).
+     if(tapped){
+       const target=document.elementFromPoint(t.clientX,t.clientY);
+       const button=target && target.closest('button');
+       if(button && battle.contains(button) && !button.disabled)button.click();
+     }
+   }
+   previousTap=tapped?{at:now,x:t.clientX,y:t.clientY}:null;
+   activeTap=null;
+ },{passive:false});
+ battle.addEventListener('touchcancel',()=>{activeTap=null;previousTap=null;},{passive:true});
+ battle.addEventListener('dblclick',e=>e.preventDefault(),{passive:false});
+})();
 checkQuestionData();updateHome();
 </script></body></html>
