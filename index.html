@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="漢字クラフト" />
 <meta name="robots" content="noindex,nofollow" />
-<title>漢字クラフト・サバイバル Ver.17 | 1日の最高記録がおこづかい</title>
+<title>漢字クラフト・サバイバル Ver.18 | 自動判定・タップ改善</title>
 <style>
 :root{--bg:#0c1425;--bg2:#142541;--card:#172946;--line:#46617c;--ink:#f1f6ff;--muted:#aec3db;--sun:#ffd17d;--mint:#78f0c2;--red:#ff899c;--blue:#91bfff}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);font-family:system-ui,-apple-system,"Hiragino Sans","Yu Gothic",Meiryo,sans-serif;line-height:1.5;background:radial-gradient(ellipse at 13% 0%,#25446b 0%,transparent 40%),radial-gradient(ellipse at 95% 32%,#183954 0%,transparent 42%),var(--bg);min-height:100vh}
@@ -376,10 +376,17 @@ body.in-game #score{font-size:clamp(13px,2.3dvh,20px)}
 .scopeBtn.active{border-color:#ffcc80;background:#364767;box-shadow:0 0 0 1px #ffce7c}
 .wordCell.given{background:#30445d;color:#b6c9d8;border-color:#63819c;box-shadow:none}
 @media(max-width:580px){.scopeChoices{gap:4px}.scopeBtn{padding:8px 4px;min-height:63px}.scopeBtn b{font-size:12px}.scopeBtn small{font-size:10px}}
+
+/* Ver.18: Suppress double-tap zoom on iOS Safari without disabling pinch zoom. */
+html,body,button,#battle,#battle *{touch-action:manipulation}
+#battle button{-webkit-tap-highlight-color:transparent}
+#battle .partButton:disabled{opacity:.55;box-shadow:none}
+#battle .action{justify-content:center;margin-top:12px}
+#battle #clearBtn{min-width:170px}
 </style>
 </head>
 <body>
-<header><div class="head"><div class="logo">⚒️ 漢字クラフト・サバイバル<small>第1期 30字 × BOSS 20 SEC</small></div><div class="headtag">ふつう15秒・難しい10秒・鬼8秒／ボス20秒</div></div></header>
+<header><div class="head"><div class="logo">⚒️ 漢字クラフト・サバイバル<small>第1期 30字 × BOSS 20 SEC · Ver.18</small></div><div class="headtag">ふつう15秒・難しい10秒・鬼8秒／ボス20秒</div></div></header>
 <main>
 <section id="home">
  <div class="hero">
@@ -394,7 +401,7 @@ body.in-game #score{font-size:clamp(13px,2.3dvh,20px)}
     <button class="scopeBtn" data-scope="weak"><b>🎯 苦手な漢字</b><small>苦手字7字＋間違えた字</small></button>
   </div><p class="sub" id="scopeInfo" style="margin:10px 0 0">第1期：30字を出題します。ボスでは範囲外の字は初めから表示されます。</p></div>
  <div class="panel infoPanel"><h3>最初の部品候補数を選ぼう</h3><p class="sub" style="margin:0">どの難易度でも、戦闘を続けると候補が2個ずつ増えます。途中からやり直しはできません。<b>ふつう15秒・難しい10秒・鬼8秒／ボス20秒</b>で勝負します。</p><div class="selectedMode" id="difficultyChoices"><button class="diff" data-level="normal"><b>🟢 ふつう</b><small>9候補・15秒・1.0倍</small></button><button class="diff active" data-level="hard"><b>🔥 むずかしい</b><small>12候補・10秒・1.2倍</small></button><button class="diff" data-level="expert"><b>💀 鬼モード</b><small>16候補・8秒・1.4倍</small></button></div></div>
- <div class="panel infoPanel"><h3>遊び方</h3><ol class="tipList"><li>出された言葉に合う漢字を、漢字の部品ストックから組み立てます。</li><li>広い回答欄で、部品の形や位置を確かめながら合体します。入れ直すときは組み立て中の字をタップ。</li><li><b>ふつう15秒・難しい10秒・鬼8秒。ボスは熟語全体で20秒。</b>「合体する」で判定。間違い・時間切れは体力−1。正解表示中はタイマーが止まります。</li><li>ボスでは練習帳の漢字だけを組み立て、ほかの漢字は最初から表示されます。全問正解で撃破。</li></ol><p class="sub" style="margin-bottom:0">第1期の練習帳に対応：<b id="inventoryCount">—</b>文字 / ボス用熟語 <b id="bossCount">—</b>語。ふつう15秒・難しい10秒・鬼8秒／ボス20秒のタイムアタック版です。これは部品と字形に親しむゲームです。おこづかいの金額はゲーム内の記録であり、実際の支払いは保護者が管理してください。</p></div>
+ <div class="panel infoPanel"><h3>遊び方</h3><ol class="tipList"><li>出された言葉に合う漢字を、漢字の部品ストックから組み立てます。</li><li>広い回答欄で、部品の形や位置を確かめながら合体します。入れ直すときは組み立て中の字をタップ。</li><li><b>ふつう15秒・難しい10秒・鬼8秒。ボスは熟語全体で20秒。</b>最後の部品を選ぶと自動判定し、次の問題へ進みます。間違い・時間切れは体力−1。正解表示中はタイマーが止まります。</li><li>ボスでは練習帳の漢字だけを組み立て、ほかの漢字は最初から表示されます。全問正解で撃破。</li></ol><p class="sub" style="margin-bottom:0">第1期の練習帳に対応：<b id="inventoryCount">—</b>文字 / ボス用熟語 <b id="bossCount">—</b>語。ふつう15秒・難しい10秒・鬼8秒／ボス20秒のタイムアタック版です。これは部品と字形に親しむゲームです。おこづかいの金額はゲーム内の記録であり、実際の支払いは保護者が管理してください。</p></div>
  <div class="backup"><button class="btn ghost small" id="exportBtn">記録を保存</button><button class="btn ghost small" id="importBtn">記録を読み込む</button><input type="file" id="importFile" accept="application/json,.json" hidden></div>
 </section>
 <section id="battle" hidden>
@@ -410,8 +417,8 @@ body.in-game #score{font-size:clamp(13px,2.3dvh,20px)}
   <p class="buildHint" id="buildLabel" hidden>左と右を選んで合体させる</p>
   <div class="slots" id="slots"></div>
   <div class="stockHeader"><span class="stockTitle">🧩 部品を選ぼう</span><span class="sub" id="piecesNum"></span></div><div id="partGrid" class="partGrid"></div>
-  <div class="action"><button class="btn ghost" id="clearBtn">↺ やり直し</button><span class="msg" id="actionHint" hidden>部品をすべて選んでください</span><button class="btn" id="checkBtn" disabled>⚒️ 合体！</button></div>
-  <div class="nextRow" id="nextRow" hidden><button class="btn" id="nextBtn">➡️ 次へ進む</button></div>
+  <div class="action"><button class="btn ghost" id="clearBtn">↺ やり直し</button></div>
+  
  </div>
  <aside class="panel sidebar"><div class="scene" id="enemyEmoji">👾</div><h3 id="enemyName">文字モンスター</h3><p id="enemyDescription">漢字の部品を集めてモンスターを撃破しよう。</p><div class="rec"><strong>💡 しくみを覚えよう</strong><small>同じ部品が何度も登場します。意味と字形をセットで覚えるほど有利になります。</small></div><div class="rec"><strong>⚠️ 失敗したら</strong><small>その場で正解の漢字と部品を見せます。ノーミスが続けば体力は回復します。</small></div></aside>
  </div>
@@ -600,9 +607,9 @@ function setQuestion(){let isBoss=run.current.type==='boss';let current=run.curr
    $('enemyDescription').textContent='熟語全体で20秒。灰色の文字は完成済み。出題字を間違えるとHP−1。';
  }else{$('questTitle').textContent='この言葉の漢字を作れ！';$('cue').textContent=w.cue;$('questionContext').textContent='正しい部品を選んで、漢字を組み立てよう。';$('enemyEmoji').textContent=['👾','🐺','🦇','🪨','👻','🐙'][run.encounters%6];$('enemyName').textContent='ことばモンスター';$('enemyDescription').textContent='部品を選ぶと組み上がり、完成すると正しい漢字になる！'}
  $('buildLabel').textContent='漢字の形に部品を配置しよう';
- cancelAutoNext();$('cue').hidden=false; $('feedback').hidden=true;$('feedback').classList.remove('wrong');$('nextRow').hidden=true;
- $('checkBtn').hidden=false;$('clearBtn').disabled=false;
- $('actionHint').textContent=isBoss?'ボスの残り時間は全体で20秒！':(NORMAL_SECONDS[run.mode]+'秒以内に部品を選ぼう！');
+ cancelAutoNext();$('cue').hidden=false; $('feedback').hidden=true;$('feedback').classList.remove('wrong');
+ $('clearBtn').disabled=true;
+ // The last piece automatically completes and judges the character.
  const bossIntro=isBoss&&run.current.boss.progress===0;
  if(bossIntro)blocked=true;
  renderSlots();renderBank();updateHud();
@@ -692,6 +699,17 @@ function componentArt(w,values){
    // A single canonical glyph guarantees the end result is a real kanji.
    return `<svg class="composeArt exactKanji" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="完成字 ${w.k}"><text x="50" y="54" dominant-baseline="central" text-anchor="middle" font-size="89" fill="#fff1ca" font-weight="700">${w.k}</text></svg>`;
  }
+ // 裏 is a genuine interleaving: the upper and lower 衣 strokes surround 里.
+ // Drawing 衣 as one full-sized character over 里 produces an illegible overlap.
+ // For this one kanji, reveal only the canonical strokes belonging to the
+ // correct component. Wrong choices remain visible as independent glyphs.
+ if(w.k==='裏'){
+   const canonical=`<text x="50" y="54" dominant-baseline="central" text-anchor="middle" font-size="89" fill="#fff1ca" font-weight="700">裏</text>`;
+   const defs=`<defs><clipPath id="ura-garment"><rect x="0" y="0" width="100" height="24"/><rect x="0" y="71" width="100" height="29"/><rect x="0" y="24" width="16" height="47"/><rect x="84" y="24" width="16" height="47"/></clipPath><clipPath id="ura-center"><rect x="16" y="24" width="68" height="47"/></clipPath></defs>`;
+   const garment=values[0]===null?'':values[0]==='衣'?`<g clip-path="url(#ura-garment)">${canonical}</g>`:compositionPiece(w,values[0],0);
+   const center=values[1]===null?'':values[1]==='里'?`<g clip-path="url(#ura-center)">${canonical}</g>`:compositionPiece(w,values[1],1);
+   return `<svg class="composeArt workingKanji uraAssembly" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${defs}${garment}${center}</svg>`;
+ }
  let pieces=values.map((v,i)=>v===null?'':compositionPiece(w,v,i)).join('');
  return `<svg class="composeArt workingKanji" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${pieces}</svg>`;
 }
@@ -721,12 +739,25 @@ function renderSlots(){
  canvas.innerHTML=guideMarkup(question)+componentArt(question,selected)+controls;
  canvas.querySelectorAll('[data-slot]').forEach(b=>b.onclick=()=>{
    if(blocked)return;
-   selected[+b.dataset.slot]=null;renderSlots();renderBank();updateCheck();
+   selected[+b.dataset.slot]=null;renderSlots();renderBank();
  });
  updateCheck();
 }
-function renderBank(){let container=$('partGrid');container.style.setProperty('--grid-rows',Math.ceil(bank.length/6));container.innerHTML=bank.map((p,i)=>`<button class="partButton ${selected.includes(p)?'used':''}" data-partidx="${i}" ${blocked?'disabled':''} aria-label="部品 ${p}">${p}</button>`).join('');container.querySelectorAll('[data-partidx]').forEach(btn=>btn.onclick=()=>{if(blocked)return;let next=selected.findIndex(v=>v===null);if(next<0){$('actionHint').textContent='入れ直すマスをタップしてから選ぼう';return;}selected[next]=bank[+btn.dataset.partidx];renderSlots();renderBank();});$('piecesNum').textContent=`${bank.length}候補`}
-function updateCheck(){$('checkBtn').disabled=blocked||selected.some(s=>s===null)}
+function renderBank(){
+ let container=$('partGrid');container.style.setProperty('--grid-rows',Math.ceil(bank.length/6));
+ container.innerHTML=bank.map((p,i)=>`<button class="partButton ${selected.includes(p)?'used':''}" data-partidx="${i}" ${blocked||selected.includes(p)?'disabled':''} aria-label="部品 ${p}">${p}</button>`).join('');
+ container.querySelectorAll('[data-partidx]').forEach(btn=>btn.onclick=()=>{
+   if(blocked)return;
+   const part=bank[+btn.dataset.partidx];
+   if(selected.includes(part))return; // repeated taps never count the same part twice
+   const next=selected.findIndex(v=>v===null);if(next<0)return;
+   selected[next]=part;renderSlots();renderBank();
+   // Zero extra taps: the last component submits the answer immediately.
+   if(selected.every(s=>s!==null))attempt('submit');
+ });
+ $('piecesNum').textContent=`${bank.length}候補`;
+}
+function updateCheck(){$('clearBtn').disabled=blocked||selected.every(s=>s===null)}
 function updateHud(){let hearts=Array.from({length:3},(_,i)=>`<span class="${i<run.hp?'':'heartOff'}">❤️</span>`).join('');$('hearts').innerHTML=hearts;$('score').textContent=scoreText(run.points10)+'・'+moneyLabel(run.points10);$('cashProgress').textContent=run.correct+'問正解・'+cashProgressLabel(run.points10);$('roundCount').textContent=run.encounters;$('streakText').textContent=run.combo+'連続';$('streakTrack').innerHTML=Array.from({length:5},(_,i)=>`<div class="streakTick ${i<(run.combo%5)?'on':''}"></div>`).join('')}
 function attempt(kind='submit'){if(!run||blocked)return;
  if(kind==='submit' && !timerPaused && performance.now()>=timerDeadline)kind='timeout';
@@ -757,29 +788,33 @@ function attempt(kind='submit'){if(!run||blocked)return;
  $('cue').hidden=true;
  const label=good?'正解！':(kind==='timeout'?'時間切れ':'不正解');
  const bonus=good?(earnedCashNow?'💴 ＋10円！':healedThisTurn?'❤️ HP +1':run.combo%5===0?'🔥 5連続！':cashProgressLabel(run.points10)):'❤️ −1';
- box.innerHTML=`<div class="feedbackStatus">${good?'✨':'💥'} ${label} <span>${bonus}</span></div><div class="answerHuge">${question.k}</div><div class="feedbackPart">${question.parts.join(' ＋ ')} <span> · 次まで <b id="autoNextCount">3</b>秒</span></div>`;
- $('checkBtn').disabled=true;$('clearBtn').disabled=true;renderBank();updateHud();
+ box.innerHTML=`<div class="feedbackStatus">${good?'✨':'💥'} ${label} <span>${bonus}</span></div><div class="answerHuge">${question.k}</div><div class="feedbackPart">${question.parts.join(' ＋ ')} <span> · ${good?'次の問題へ！':'正しい形を確認しよう'}</span></div>`;
+ $('clearBtn').disabled=true;renderBank();updateHud();
  // Save scoring even if a browser tab is closed mid-run
  if(run.score>saveData.best){saveData.best=run.score}persist();
  if(isBoss)run.current.boss.completed.push(good);
- if(run.hp===0){$('nextBtn').textContent='💀 結果を見る';run.pending='gameover';}
+ if(run.hp===0){run.pending='gameover';}
  else if(isBoss && kind==='timeout'){
-    run.encounters++;run.pending='nextEncounter';$('nextBtn').textContent='⌛ ボスが去った…';
+    run.encounters++;run.pending='nextEncounter';
   }
-  else if(isBoss&&run.current.boss.progress<run.current.boss.total-1){$('nextBtn').textContent='⚔️ ボスの次の文字';run.pending='nextBossChar';}
- else if(isBoss && run.current.boss.completed.every(Boolean)){run.bossDefeated++;$('feedback').querySelector('.feedbackStatus').firstChild.textContent='🏆 ボス撃破！';run.encounters++;run.pending='nextEncounter';$('nextBtn').textContent='➡️ 次の戦闘へ';
+  else if(isBoss&&run.current.boss.progress<run.current.boss.total-1){run.pending='nextBossChar';}
+ else if(isBoss && run.current.boss.completed.every(Boolean)){run.bossDefeated++;$('feedback').querySelector('.feedbackStatus').firstChild.textContent='🏆 ボス撃破！';run.encounters++;run.pending='nextEncounter';
  if(run.encounters%10===0)showFx('milestone','🏆',`${run.encounters}戦突破！`,'ボス撃破！ サバイバル続行',1800);
  else showFx('victory','⚔️','ボス撃破！',`${run.bossDefeated}体目のボスを倒した！`,1550);
  }
- else{run.encounters++;run.pending='nextEncounter';$('nextBtn').textContent=run.encounters%5===4?'👹 ボス戦へ':'➡️ 次の戦闘へ';}
- if(run.score>saveData.best)saveData.best=run.score;if(run.encounters>saveData.rounds)saveData.rounds=run.encounters;if(run.bossDefeated>saveData.boss)saveData.boss=run.bossDefeated;persist();updateHud();$('nextRow').hidden=false;
- scheduleNext();
+ else{run.encounters++;run.pending='nextEncounter';}
+ if(run.score>saveData.best)saveData.best=run.score;if(run.encounters>saveData.rounds)saveData.rounds=run.encounters;if(run.bossDefeated>saveData.boss)saveData.boss=run.bossDefeated;persist();updateHud();
+ scheduleNext(good);
 }
 let nextTimeout=null, countInterval=null;
 function cancelAutoNext(){if(nextTimeout!==null){clearTimeout(nextTimeout);nextTimeout=null;}if(countInterval!==null){clearInterval(countInterval);countInterval=null;}}
-function scheduleNext(){cancelAutoNext();let deadline=performance.now()+3000;
- countInterval=setInterval(()=>{let el=$('autoNextCount');if(el)el.textContent=Math.max(0,Math.ceil((deadline-performance.now())/1000));},100);
- nextTimeout=setTimeout(()=>{cancelAutoNext();advance();},3000);
+function scheduleNext(good){
+ cancelAutoNext();
+ // A correct normal answer flows quickly; incorrect answers remain long enough
+ // to inspect the correct glyph. The boss defeat animation remains readable.
+ let delay=good?(isBossCurrent()&&run.pending==='nextEncounter'?1700:700):1700;
+ if(run.pending==='gameover')delay=2100;
+ nextTimeout=setTimeout(()=>{cancelAutoNext();advance();},delay);
 }
 function advance(){if(!run)return;let type=run.pending;run.pending=null;if(type==='gameover'){endRun(false);return}if(type==='nextBossChar'){run.current.boss.progress++;setQuestion();return}startEncounter()}
 function endRun(quit){
@@ -801,8 +836,8 @@ function endRun(quit){
  if(quit){$('result').querySelector('h1').textContent='今回の冒険は終了！';}
  updateHome();
 }
-$('startBtn').onclick=startRun;$('retryBtn').onclick=startRun;$('homeBtn').onclick=()=>{updateHome();activateScreen('home')};$('checkBtn').onclick=()=>attempt('submit');$('nextBtn').onclick=advance;
-$('clearBtn').onclick=()=>{if(blocked)return;selected.fill(null);renderSlots();renderBank();$('actionHint').textContent='もう一度、部品を選ぼう'};
+$('startBtn').onclick=startRun;$('retryBtn').onclick=startRun;$('homeBtn').onclick=()=>{updateHome();activateScreen('home')};
+$('clearBtn').onclick=()=>{if(blocked)return;selected.fill(null);renderSlots();renderBank()};
 $('exitBtn').onclick=()=>{if(window.confirm('今回の冒険を終了して結果を表示しますか？'))endRun(true)};
 document.querySelectorAll('.diff').forEach(btn=>btn.onclick=()=>{level=btn.dataset.level;document.querySelectorAll('.diff').forEach(b=>b.classList.toggle('active',b===btn))});
 document.querySelectorAll('.scopeBtn').forEach(btn=>btn.onclick=()=>{scope=btn.dataset.scope;document.querySelectorAll('.scopeBtn').forEach(b=>b.classList.toggle('active',b===btn));updateScopeInfo()});
@@ -825,10 +860,11 @@ $('importFile').onchange=async e=>{
     saveData.rounds=Math.max(saveData.rounds,Number(o.rounds)||0);
     saveData.boss=Math.max(saveData.boss,Number(o.boss)||0);
   }
-  persist();updateHome();alert('学習記録を読み込みました。Ver.17以前のおこづかい記録は倍率が不明のため換算しません。');
+  persist();updateHome();alert('学習記録を読み込みました。古い版のおこづかい記録は倍率が不明のため換算しません。');
  }catch(err){alert('有効な学習記録のJSONを選んでください。')}
  e.target.value='';
 };
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){todayRecord();if($('home')&&!$('home').hidden)updateHome();}});
+document.getElementById('battle').addEventListener('dblclick',e=>e.preventDefault(),{passive:false});
 checkQuestionData();updateHome();
 </script></body></html>
