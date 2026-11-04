@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="漢字クラフト" />
 <meta name="robots" content="noindex,nofollow" />
-<title>漢字クラフト・サバイバル Ver.20 β5 | 週間おこづかい・日曜21時締切</title>
+<title>漢字クラフト・サバイバル Ver.20 正式版 更新1 | 週間おこづかい・日曜21時締切</title>
 <style>
 :root{--bg:#0c1425;--bg2:#142541;--card:#172946;--line:#46617c;--ink:#f1f6ff;--muted:#aec3db;--sun:#ffd17d;--mint:#78f0c2;--red:#ff899c;--blue:#91bfff}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);font-family:system-ui,-apple-system,"Hiragino Sans","Yu Gothic",Meiryo,sans-serif;line-height:1.5;background:radial-gradient(ellipse at 13% 0%,#25446b 0%,transparent 40%),radial-gradient(ellipse at 95% 32%,#183954 0%,transparent 42%),var(--bg);min-height:100vh}
@@ -465,15 +465,26 @@ body.challenge-playing .hud .challengeProgress .pip{height:10px;width:22px}
 .weeklyHistoryRow button.paid{background:#154938;border-color:#4ba77d;color:#b9f6d9}
 .weeklyFootnote{margin-bottom:0;font-size:11px}
 @media(max-width:560px){.weeklyHero{grid-template-columns:1fr;gap:10px}.weeklyHistoryRow{flex-wrap:wrap}.weeklyHistoryRow button{margin-left:auto}}
+
+/* Product revision: tougher multi-compound boss and mixed-script word prompt. */
+body.in-game.boss-active .cue{font-size:clamp(26px,7.5vw,42px);letter-spacing:.035em;white-space:nowrap}
+body.in-game.boss-active .cue .targetReading{color:#ffed8e;text-decoration:underline;text-decoration-color:#ffc761;text-decoration-thickness:3px;text-underline-offset:5px}
+body.in-game.boss-active .wordSlots{gap:10px;margin:2px 0 3px;justify-content:center}
+.bossStage{display:grid;place-items:center;min-width:30px;height:29px;padding:2px 5px;border:1px solid #6b7894;background:#192b43;border-radius:8px;color:#acc2df;font-size:15px;font-weight:900}
+.bossStage.on{border-color:#ffe19a;background:#583945;color:#ffe29a;box-shadow:0 0 10px #c87a7375}
+.bossStage.pass{background:#17483c;border-color:#58db9c;color:#b1ffe1}
+.bossStage.miss{background:#522a40;border-color:#dd6c88;color:#ffbfca}
+.diff.completed:disabled{background:#193f37;opacity:.78;border:1px solid #5fc49b;color:#b3edcf}
+@media(max-width:560px){body.in-game.boss-active .cue{font-size:clamp(22px,6vw,35px)}.bossStage{min-width:24px;height:23px;font-size:12px}}
 </style>
 </head>
 <body>
-<header><div class="head"><div class="logo">⚒️ 漢字クラフト・サバイバル<small>第1期 30字 · Ver.20 β5（保護者テスト版）</small></div><div class="headtag">ふつう15秒・難しい10秒・鬼8秒／ボス20秒</div></div></header>
+<header><div class="head"><div class="logo">⚒️ 漢字クラフト・サバイバル<small>第1期 30字 · Ver.20 正式版・更新1</small></div><div class="headtag">ふつう15秒・難しい10秒・鬼8秒／ボス連戦</div></div></header>
 <main>
 <section id="home">
  <div class="hero">
-  <div class="panel heroMain"><div class="betaTag">🧪 Ver.20 β5・保護者テスト用／まだ公開しない</div><div class="eyebrow">漢字づくりで、どこまで生き残れる？</div><h1>練習帳と連動！<span>30字サバイバル</span></h1><p>正しい部品をストックから選び、漢字を完成させてモンスターを撃破。進むほど部品候補が増える。5戦ごとに熟語ボスが出現！ <b class="gold">ふつう15秒・難しい10秒・鬼8秒／ボス20秒</b>のタイムアタック！</p><div class="startOptions"><button class="btn" id="startBtn">⚔️ 通常サバイバル</button><button class="btn challengeBtn" id="challengeBtn">🎯 苦手チャレンジ</button><button class="btn ghost" id="statsBtn">📊 成績表</button><span class="pill">本日合計 <b id="bestBanner">0円</b></span></div><div class="notice">第1期30字に対応。通常モードは全30字を均等シャッフルし、1回の挑戦で異なる30字の全問正解を目指します。間違えた字はその回のうちに再出題されます。苦手チャレンジは苦手・復習候補を優先し、異なる3字の3連続正解で報酬を獲得。<b>β版につき、おこづかいは試験値です。</b></div></div>
-  <div class="panel side"><div class="eyebrow">GAME RULE</div><h2>一度のミスが命取り</h2><div class="rule"><span class="ruleEmoji">⏱️</span><span><b class="gold">通常問題はふつう15秒・難しい10秒・鬼8秒、ボスは熟語全体20秒</b>。時間切れは体力 <b>−1</b>。</span></div><div class="rule"><span class="ruleEmoji">❤️</span><span>体力は <b class="gold">3</b>。間違えると <b>−1</b>。0になったらゲームオーバー。</span></div><div class="rule"><span class="ruleEmoji">🔥</span><span><b>5連続正解</b>ごとに体力が <b class="mint">+1</b>（最大3）。</span></div><div class="rule"><span class="ruleEmoji">👹</span><span>5戦ごとにボス。<b>2字熟語 → 4字熟語</b>へ進化。</span></div><div class="rule"><span class="ruleEmoji">💴</span><span><b class="gold">異なる30字すべてに正解すると100円でクリア！ ボスは達成数に含みません。10円単位で四捨五入（30字未満は最大90円）。難易度倍率はゲーム得点のみ</b>。1日の最高記録だけを採用（上限100円）。複数回の合算なし。</span></div><div class="rule"><span class="ruleEmoji">🧩</span><span>進むほど候補が増える。答えとなる漢字は解答前には出ません。</span></div></div>
+  <div class="panel heroMain"><div class="betaTag">🏆 Ver.20 正式版・更新1／30字完全クリアで進化</div><div class="eyebrow">漢字づくりで、どこまで生き残れる？</div><h1>練習帳と連動！<span>30字サバイバル</span></h1><p>正しい部品をストックから選び、漢字を完成させてモンスターを撃破。進むほど部品候補が増える。5戦ごとに熟語ボスが出現！ <b class="gold">ふつう15秒・難しい10秒・鬼8秒／ボスは2〜3連戦！</b>のタイムアタック！</p><div class="startOptions"><button class="btn" id="startBtn">⚔️ 通常サバイバル</button><button class="btn challengeBtn" id="challengeBtn">🎯 苦手チャレンジ</button><button class="btn ghost" id="statsBtn">📊 成績表</button><span class="pill">本日合計 <b id="bestBanner">0円</b></span></div><div class="notice">第1期30字に対応。通常モードは全30字を均等シャッフルし、1回の挑戦で異なる30字の全問正解を目指します。間違えた字はその回のうちに再出題されます。苦手チャレンジは苦手・復習候補を優先し、異なる3字の3連続正解で報酬を獲得。<b>一度クリアした難易度は卒業。次の難易度だけに挑戦できます。</b></div></div>
+  <div class="panel side"><div class="eyebrow">GAME RULE</div><h2>一度のミスが命取り</h2><div class="rule"><span class="ruleEmoji">⏱️</span><span><b class="gold">通常問題はふつう15秒・難しい10秒・鬼8秒、ボスは2〜3熟語の連戦</b>。時間切れは体力 <b>−1</b>。</span></div><div class="rule"><span class="ruleEmoji">❤️</span><span>体力は <b class="gold">3</b>。間違えると <b>−1</b>。0になったらゲームオーバー。</span></div><div class="rule"><span class="ruleEmoji">🔥</span><span><b>5連続正解</b>ごとに体力が <b class="mint">+1</b>（最大3）。</span></div><div class="rule"><span class="ruleEmoji">👹</span><span>5戦ごとにボス。<b>2字熟語×2連戦 → 4字熟語×3連戦</b>。全体で1本の制限時間。</span></div><div class="rule"><span class="ruleEmoji">💴</span><span><b class="gold">異なる30字すべてに正解すると100円でクリア！ ボスは達成数に含みません。10円単位で四捨五入（30字未満は最大90円）。難易度倍率はゲーム得点のみ</b>。1日の最高記録だけを採用（上限100円）。複数回の合算なし。</span></div><div class="rule"><span class="ruleEmoji">🧩</span><span>進むほど候補が増える。答えとなる漢字は解答前には出ません。</span></div></div>
  </div>
  <div class="stats"><div class="panel stat"><label>通常のおこづかい（今日）</label><strong id="bestScore">0円</strong><span class="sub" id="todayBestCorrect">本日最高 0問</span></div><div class="panel stat"><label>最長到達</label><strong id="bestRound">0</strong><span class="sub"> 戦</span></div><div class="panel stat"><label>倒したボス</label><strong id="bestBoss">0</strong><span class="sub"> 体</span></div></div>
   <div class="panel infoPanel lessonSelector"><h3>📊 今日の学習ダッシュボード</h3><div class="dashboard"><div class="dashTile"><small>苦手な漢字</small><b id="weakCount">0字</b></div><div class="dashTile"><small>得意な漢字</small><b id="strongCount">0字</b></div><div class="dashTile"><small>練習中</small><b id="learningCount">30字</b></div></div><p class="sub" style="margin:0">判定は「ふつう」の通常問題の成績で行います。難しい・鬼・苦手チャレンジの練習結果は別に記録します。初回のデータが少ないうちは「練習中」と判定します。</p><div class="dashboard"><div class="dashTile"><small>通常・今日</small><b id="dailyNormalCash">0円</b></div><div class="dashTile"><small>苦手・今日</small><b id="dailyChallengeCash">0円</b></div><div class="dashTile"><small>本日合計</small><b id="dailyTotalCash">0円</b></div></div></div>
@@ -486,8 +497,8 @@ body.challenge-playing .hud .challengeProgress .pip{height:10px;width:22px}
   <div class="weeklyHistory"><div class="row weeklyHeader"><h4>🔒 締切済みの支払い記録</h4><span id="weeklyUnpaid">未払い合計 0円</span></div><div id="weeklyHistoryRows" class="weeklyHistoryRows">締切済みの記録はまだありません。</div></div>
   <p class="sub weeklyFootnote">記録はこの端末・このブラウザに保存されます。支払後は「支払済みにする」で管理できます。iPhone同士で自動同期はされません。</p>
  </div>
- <div class="panel infoPanel"><h3>難易度を選ぼう・実績で解放</h3><p class="sub" style="margin:0">最初は「ふつう」だけ。1回のプレイで27問正解すると次の難易度が永久解放されます。戦闘を続けると候補が2個ずつ増えます。<b>ふつう15秒・難しい10秒・鬼8秒／ボス20秒</b>で勝負します。</p><div class="selectedMode" id="difficultyChoices"><button class="diff active" data-level="normal"><b>🟢 ふつう</b><small>9候補・15秒</small></button><button class="diff" data-level="hard" disabled><b>🔒 むずかしい</b><small>ふつうで27問正解すると解放</small></button><button class="diff" data-level="expert" disabled><b>🔒 鬼モード</b><small>難しいで27問正解すると解放</small></button></div><div class="unlockInfo" id="unlockInfo" aria-live="polite">ふつうで27問正解すると「難しい」を解放！</div></div>
- <div class="panel infoPanel"><h3>遊び方</h3><ol class="tipList"><li>出された言葉に合う漢字を、漢字の部品ストックから組み立てます。</li><li>広い回答欄で、部品の形や位置を確かめながら合体します。入れ直すときは組み立て中の字をタップ。</li><li><b>ふつう15秒・難しい10秒・鬼8秒。ボスは熟語全体で20秒。</b>最後の部品を選ぶと自動判定し、次の問題へ進みます。間違い・時間切れは体力−1。正解表示中はタイマーが止まります。</li><li>通常サバイバルは30字を均等シャッフル。間違えた字はその回のうちに再出題し、異なる30字すべてに正解すると100円で完全クリア。5戦ごとにボス（ボスの正解は30字達成数に含まれません）。ふつう27問で難しい、難しい27問で鬼を解放。<b>苦手チャレンジはボスなし</b>で、異なる3字の3連続正解ごとに報酬を獲得します。</li><li>苦手の克服には、異なる3日でのチャレンジ正解と通常モードでの安定した正解が必要です。</li></ol><p class="sub" style="margin-bottom:0">第1期の練習帳に対応：<b id="inventoryCount">—</b>文字 / ボス用熟語 <b id="bossCount">—</b>語。ふつう15秒・難しい10秒・鬼8秒／ボス20秒のタイムアタック版です。これは部品と字形に親しむゲームです。おこづかいの金額はゲーム内の記録であり、実際の支払いは保護者が管理してください。</p></div>
+ <div class="panel infoPanel"><h3>🏆 完全クリアで次の難易度へ</h3><p class="sub" style="margin:0">最初は「ふつう」だけ。<b>30字すべてを正解して完全クリア</b>すると次の難易度へ進み、クリア済みの難易度は卒業します。戦闘が進むと候補が増えます。通常問題はふつう15秒・難しい10秒・鬼8秒。ボスは2〜3熟語の連戦です。</p><div class="selectedMode" id="difficultyChoices"><button class="diff active" data-level="normal"><b>🟢 ふつう</b><small>9候補・15秒</small></button><button class="diff" data-level="hard" disabled><b>🔒 むずかしい</b><small>ふつうを完全クリアで解放</small></button><button class="diff" data-level="expert" disabled><b>🔒 鬼モード</b><small>難しいを完全クリアで解放</small></button></div><div class="unlockInfo" id="unlockInfo" aria-live="polite">ふつうで全30字クリアすると「難しい」へ！</div></div>
+ <div class="panel infoPanel"><h3>遊び方</h3><ol class="tipList"><li>出された言葉に合う漢字を、漢字の部品ストックから組み立てます。</li><li>広い回答欄で、部品の形や位置を確かめながら合体します。入れ直すときは組み立て中の字をタップ。</li><li><b>ふつう15秒・難しい10秒・鬼8秒。ボスは2〜3熟語の連戦で、制限時間は全体で共通。</b>最後の部品を選ぶと自動判定し、次の問題へ進みます。間違い・時間切れは体力−1。正解表示中はタイマーが止まります。</li><li>通常サバイバルは30字を均等シャッフル。間違えた字はその回のうちに再出題し、異なる30字すべてに正解すると100円で完全クリア。5戦ごとにボス（ボスの正解は30字達成数に含まれません）。ふつう30字完全クリアで難しい、難しい30字完全クリアで鬼へ進み、クリア済みの難易度は卒業。<b>苦手チャレンジはボスなし</b>で、異なる3字の3連続正解ごとに報酬を獲得します。</li><li>苦手の克服には、異なる3日でのチャレンジ正解と通常モードでの安定した正解が必要です。</li></ol><p class="sub" style="margin-bottom:0">第1期の練習帳に対応：<b id="inventoryCount">—</b>文字 / ボス用熟語 <b id="bossCount">—</b>語。ふつう15秒・難しい10秒・鬼8秒／ボスは2〜3熟語の連戦です。これは部品と字形に親しむゲームです。おこづかいの金額はゲーム内の記録であり、実際の支払いは保護者が管理してください。</p></div>
  <div class="backup"><button class="btn ghost small" id="exportBtn">記録を保存</button><button class="btn ghost small" id="importBtn">記録を読み込む</button><input type="file" id="importFile" accept="application/json,.json" hidden></div>
 </section>
 <section id="battle" hidden>
@@ -497,7 +508,7 @@ body.challenge-playing .hud .challengeProgress .pip{height:10px;width:22px}
   <div class="row" style="justify-content:space-between"><span class="questBadge" id="modeBadge">⚔️ 通常バトル</span><span class="sub" id="difficultyText">部品候補 12個</span></div>
   <div id="bossWordBlock" hidden><div class="wordSlots" id="wordSlots"></div><div class="promptDescription" id="bossMeaning"></div></div>
   <h2 class="questTitle" id="questTitle" hidden>漢字を組み立てろ！</h2>
-  <div class="timerBox" id="timerBox" aria-label="難易度別制限時間・ボス熟語全体20秒"><div class="timerLabel"><strong>⏱</strong><strong class="timerNumber" id="timerText">10.0秒</strong></div><div class="timerTrack" id="timerTrack" role="progressbar" aria-label="残り時間" aria-valuemin="0" aria-valuemax="10" aria-valuenow="10"><div class="timerFill" id="timerFill"></div></div></div>
+  <div class="timerBox" id="timerBox" aria-label="難易度別制限時間・ボス2〜3連戦で時間共有"><div class="timerLabel"><strong>⏱</strong><strong class="timerNumber" id="timerText">10.0秒</strong></div><div class="timerTrack" id="timerTrack" role="progressbar" aria-label="残り時間" aria-valuemin="0" aria-valuemax="10" aria-valuenow="10"><div class="timerFill" id="timerFill"></div></div></div>
   <div class="promptZone"><div class="cue" id="cue">—</div><div id="feedback" class="feedback" aria-live="polite" hidden></div></div>
   <p class="promptDescription" id="questionContext" hidden>正しい部品を順番に選ぼう</p>
   <p class="buildHint" id="buildLabel" hidden>左と右を選んで合体させる</p>
@@ -555,7 +566,7 @@ const $=id=>document.getElementById(id);
 const unique=a=>[...new Set(a)];
 function shuffle(input){let a=[...input];for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 const DEFAULT_SETTINGS={normalCap:100,challengePer:30,challengeCap:150};
-let saveData={best:0,bestCorrect:0,rounds:0,boss:0,attempts:{},totalRuns:0,daily:{date:'',bestCorrect:0,bestPoints10:0,bestMode:'normal'},skills:{},challengeDaily:{date:'',earned:0,sets:0,paidChars:[]},settings:{...DEFAULT_SETTINGS},normalQueue:[],difficultyBest:{normal:0,hard:0,expert:0},weeklyLedger:{},todayCredited:{date:'',normal:0,challenge:0}};
+let saveData={best:0,bestCorrect:0,rounds:0,boss:0,attempts:{},totalRuns:0,daily:{date:'',bestCorrect:0,bestPoints10:0,bestMode:'normal'},skills:{},challengeDaily:{date:'',earned:0,sets:0,paidChars:[]},settings:{...DEFAULT_SETTINGS},normalQueue:[],difficultyBest:{normal:0,hard:0,expert:0},difficultyClears:{normal:false,hard:false},weeklyLedger:{},todayCredited:{date:'',normal:0,challenge:0}};
 try{
  const loaded=JSON.parse(localStorage.getItem(KEY)||'null');
  if(loaded?.version===9||loaded?.version===10){
@@ -565,10 +576,18 @@ try{
   if(!loaded.difficultyBest && loaded.daily?.bestMode==='normal'){
    saveData.difficultyBest.normal=Math.max(0,Number(loaded.daily.bestCorrect)||0);
   }
+  // Keep real 30/30 victories from the previous product build.
+  // 27/30 progress alone must never unlock the next mode.
+  const clears=loaded.difficultyClears&&typeof loaded.difficultyClears==='object'?loaded.difficultyClears:null;
+  saveData.difficultyClears={
+   normal:clears?!!clears.normal:Number(saveData.difficultyBest.normal)>=WORDS.length,
+   hard:clears?!!clears.hard:Number(saveData.difficultyBest.hard)>=WORDS.length
+  };
+  if(saveData.difficultyClears.hard)saveData.difficultyClears.normal=true;
  }
 
 }catch(e){}
-function persist(){saveData.settings={...DEFAULT_SETTINGS};try{localStorage.setItem(KEY,JSON.stringify({...saveData,version:10,featureVersion:'20-beta5'}))}catch(e){}}
+function persist(){saveData.settings={...DEFAULT_SETTINGS};try{localStorage.setItem(KEY,JSON.stringify({...saveData,version:10,featureVersion:'20-release1'}))}catch(e){}}
 function dateHere(){return jstDay();} // Daily and weekly boundaries both follow Japan Standard Time.
 // Each ledger bucket ends at Sunday 21:00 JST, so 21:00 onward is next Sunday's bucket.
 // A full seven-day period is always assigned to precisely one cutoff.
@@ -677,27 +696,41 @@ function cashProgressLabel(correct){
  for(let n=Math.floor(correct)+1;n<=30;n++)if(normalCash(n)>current){next=n;break;}
  return '次の＋10円まであと'+(next-Math.floor(correct))+'字（30字コンプリートで'+cap+'円）';
 }
-const UNLOCK_TARGET=27;
-function levelUnlocked(mode){return mode==='normal'||(mode==='hard'&&(saveData.difficultyBest?.normal||0)>=UNLOCK_TARGET)||(mode==='expert'&&(saveData.difficultyBest?.hard||0)>=UNLOCK_TARGET);}
+function activeDifficulty(){
+ const clears=saveData.difficultyClears||{};
+ return clears.hard?'expert':clears.normal?'hard':'normal';
+}
+function levelUnlocked(mode){return mode===activeDifficulty();}
 function renderDifficultyChoices(){
- if(!levelUnlocked(level))level='normal';
+ const active=activeDifficulty();level=active;
+ const clears=saveData.difficultyClears||{};
+ const order=['normal','hard','expert'];
+ const names={normal:'🟢 ふつう',hard:'🔥 むずかしい',expert:'💀 鬼モード'};
+ const infos={normal:'9候補・15秒',hard:'12候補・10秒',expert:'16候補・8秒'};
  for(const btn of document.querySelectorAll('.diff')){
-  const mode=btn.dataset.level,unlocked=levelUnlocked(mode);
-  btn.disabled=!unlocked;btn.classList.toggle('active',mode===level);btn.setAttribute('aria-disabled',String(!unlocked));
-  const configs={normal:['🟢 ふつう','9候補・15秒・1.0倍'],hard:[unlocked?'🔥 むずかしい':'🔒 むずかしい',unlocked?'12候補・10秒・1.2倍':'ふつうで27問正解して解放'],expert:[unlocked?'💀 鬼モード':'🔒 鬼モード',unlocked?'16候補・8秒・1.4倍':'難しいで27問正解して解放']};
-  btn.querySelector('b').textContent=configs[mode][0];btn.querySelector('small').textContent=configs[mode][1];
+  const mode=btn.dataset.level,done=(mode==='normal'&&clears.normal)||(mode==='hard'&&clears.hard);
+  btn.disabled=mode!==active;btn.classList.toggle('active',mode===active);btn.classList.toggle('completed',!!done);
+  btn.setAttribute('aria-disabled',String(mode!==active));
+  btn.querySelector('b').textContent=done?'✅ '+names[mode].replace(/^[^ ]+ /,'')+'（クリア済み）':mode===active?names[mode]:'🔒 '+names[mode].replace(/^[^ ]+ /,'');
+  btn.querySelector('small').textContent=done?'卒業！ 上位モードに挑戦':mode===active?infos[mode]:'前のモードを完全クリアして解放';
  }
  const best=saveData.difficultyBest||{};
- $('unlockInfo').innerHTML=levelUnlocked('expert')?'<strong>🏆 すべての難易度を解放済み！</strong> どのモードでも遊べます。':levelUnlocked('hard')?`<strong>🔥 「鬼」解放まで：</strong>難しいの最高 ${best.hard||0} / ${UNLOCK_TARGET}問<span class="unlockNext">1回の「難しい」プレイで27問正解すれば解放。達成状況は永久保存されます。</span>`:`<strong>🔒 「難しい」解放まで：</strong>ふつうの最高 ${best.normal||0} / ${UNLOCK_TARGET}問<span class="unlockNext">1回の「ふつう」プレイで27問正解すれば解放。合算ではありません。</span>`;
+ $('unlockInfo').innerHTML=active==='expert'?'<strong>👑 鬼モード挑戦中！</strong> ふつう・難しいはクリア済み。今は鬼モードだけプレイできます。':active==='hard'?`<strong>🔥 難しいモード挑戦中！</strong>ふつう完全クリア済み<span class="unlockNext">難しいで全${WORDS.length}字に正解すると鬼モードへ！ 現在の最高 ${best.hard||0}/${WORDS.length}字</span>`:`<strong>🟢 ふつうモード挑戦中！</strong>全${WORDS.length}字をクリアすると難しいモードへ<span class="unlockNext">現在の最高 ${best.normal||0}/${WORDS.length}字。27字では解放されません。</span>`;
 }
 function registerDifficultyBest(){
  if(!run||run.kind!=='survival')return;
  const previous=Number(saveData.difficultyBest[run.mode])||0;
  if(run.correct>previous){saveData.difficultyBest[run.mode]=run.correct;persist();}
- if(previous<UNLOCK_TARGET&&run.correct>=UNLOCK_TARGET){
-  const unlocked=run.mode==='normal'?'hard':run.mode==='hard'?'expert':null;
-  if(unlocked){run.unlocks.push(unlocked);renderDifficultyChoices();}
+}
+function registerPerfectClear(){
+ if(!run||run.kind!=='survival'||run.solvedChars.length!==WORDS.length)return;
+ if(!saveData.difficultyClears)saveData.difficultyClears={normal:false,hard:false};
+ if(run.mode==='normal'&&!saveData.difficultyClears.normal){
+  saveData.difficultyClears.normal=true;run.unlocks.push('hard');
+ }else if(run.mode==='hard'&&!saveData.difficultyClears.hard){
+  saveData.difficultyClears.normal=true;saveData.difficultyClears.hard=true;run.unlocks.push('expert');
  }
+ level=activeDifficulty();persist();renderDifficultyChoices();
 }
 function todayRecord(){
  const today=dateHere();
@@ -758,9 +791,14 @@ function challengeCandidates(){
  return [...shuffle(primary),...shuffle(provisional),...shuffle(learning),...shuffle(strong)];
 }
 function normalTimerMs(){return NORMAL_SECONDS[run?.mode||level]*1000;}
-const BOSS_MS=20000;
+// Boss round = a sequence of independent compounds under ONE shared clock.
+// The mixed kanji/kana cue shows ONLY the target character in hiragana.
+function bossLimitMs(length,mode){
+ const limits={normal:{2:20000,4:24000},hard:{2:16000,4:20000},expert:{2:14000,4:18000}};
+ return limits[mode][length];
+}
 function isBossCurrent(){return !!(run&&run.current&&run.current.type==='boss')}
-function totalTimerMs(){return isBossCurrent()?BOSS_MS:normalTimerMs()}
+function totalTimerMs(){return isBossCurrent()?run.current.boss.limitMs:normalTimerMs()}
 let timerInterval=null, timerDeadline=0, timerRemaining=10000, timerPaused=false, questionStartAt=0;
 function stopTimer(){if(timerInterval!==null){clearInterval(timerInterval);timerInterval=null;}}
 function paintTimer(ms){const limit=totalTimerMs();const remaining=Math.max(0,Math.min(limit,ms));
@@ -774,7 +812,7 @@ function paintTimer(ms){const limit=totalTimerMs();const remaining=Math.max(0,Ma
 function timerTick(){if(!run||blocked||timerPaused)return;
  const remaining=Math.max(0,timerDeadline-performance.now());timerRemaining=remaining;paintTimer(remaining);
  if(remaining<=0){attempt('timeout');}}
-function startTimer(){stopTimer();questionStartAt=performance.now();timerRemaining=isBossCurrent()?(run.current.boss.remainingMs??BOSS_MS):normalTimerMs();timerPaused=document.hidden;
+function startTimer(){stopTimer();questionStartAt=performance.now();timerRemaining=isBossCurrent()?(run.current.boss.remainingMs??run.current.boss.limitMs):normalTimerMs();timerPaused=document.hidden;
  $('timerBox').classList.remove('urgent','expired','done');paintTimer(timerRemaining);
  timerDeadline=performance.now()+timerRemaining;
  if(!timerPaused)timerInterval=setInterval(timerTick,50);
@@ -846,8 +884,8 @@ function animateElement(el,klass){el.classList.remove('hitShake','successGlow','
 function startRun(kind='survival'){
  cancelAutoNext();stopTimer();stopIntro();hideFx();$('result').classList.remove('newRecord');
  if(kind==='challenge'&&todayChallenge().earned>=saveData.settings.challengeCap){alert('今日の苦手チャレンジ報酬は上限に達しています。明日また挑戦できます。');return;}
- if(!levelUnlocked(level)){level='normal';renderDifficultyChoices();}
- run={kind,day:dateHere(),mode:level,scope:'current',baselineDaily:todayRecord().bestCorrect,baselineBest:saveData.bestCorrect,hp:3,score:0,points10:0,correct:0,attempted:0,combo:0,bossDefeated:0,encounters:0,current:null,last:[],deck:kind==='survival'?shuffle(WORDS.map(w=>w.k)):[],solvedChars:[],streakChars:[],weakHistory:[],bossLast:[],pending:null,challengeGains:0,challengeSets:0,unlocks:[]};
+ level=activeDifficulty();renderDifficultyChoices();
+ run={kind,day:dateHere(),mode:kind==='challenge'?'normal':level,scope:'current',baselineDaily:todayRecord().bestCorrect,baselineBest:saveData.bestCorrect,hp:3,score:0,points10:0,correct:0,attempted:0,combo:0,bossDefeated:0,encounters:0,current:null,last:[],deck:kind==='survival'?shuffle(WORDS.map(w=>w.k)):[],solvedChars:[],streakChars:[],weakHistory:[],bossLast:[],pending:null,challengeGains:0,challengeSets:0,unlocks:[]};
  saveData.totalRuns++;persist();activateScreen('battle');startEncounter();
 }
 function getNormal(){
@@ -872,18 +910,28 @@ function getChallenge(){
  return target;
 }
 function getBoss(){
- let number=Math.floor(run.encounters/5)+1;
- let length=number<=2?2:4;
+ const number=Math.floor(run.encounters/5)+1;
+ const length=number<=2?2:4;
+ const stages=length===2?2:3;
  const enabled=new Set(activeWords().map(w=>w.k));
- const eligible=n=>BOSSWORDS.filter(b=>[...b.word].length===n&&[...b.word].some(c=>enabled.has(c)));
- let choices=eligible(length).filter(b=>!run.bossLast.includes(b.word));
- if(!choices.length)choices=eligible(length);
- if(!choices.length){length=2;choices=eligible(2);}
- if(!choices.length)throw Error('出題できるボス熟語がありません');
- const chosen=choices[Math.floor(Math.random()*choices.length)];
- const targets=[...chosen.word].map((c,i)=>enabled.has(c)?i:-1).filter(i=>i>=0);
- run.bossLast.push(chosen.word);if(run.bossLast.length>7)run.bossLast.shift();
- return {...chosen,progress:0,completed:[],total:targets.length,targets,number,remainingMs:BOSS_MS};
+ const eligible=BOSSWORDS.filter(b=>[...b.word].length===length&&[...b.word].some(c=>enabled.has(c)));
+ if(eligible.length<stages)throw Error('ボス熟語の候補が不足しています');
+ const rounds=[],usedWords=new Set(),usedKanji=new Set();
+ for(let i=0;i<stages;i++){
+  let candidates=eligible.filter(b=>!usedWords.has(b.word)&&!run.bossLast.includes(b.word));
+  if(!candidates.length)candidates=eligible.filter(b=>!usedWords.has(b.word));
+  // Prefer distinct target kanji across stages, without excluding valid compounds.
+  const diverse=candidates.filter(b=>[...b.word].some(c=>enabled.has(c)&&!usedKanji.has(c)));
+  if(diverse.length)candidates=diverse;
+  const chosen=candidates[Math.floor(Math.random()*candidates.length)];
+  const arr=[...chosen.word],focuses=arr.map((c,j)=>enabled.has(c)?j:-1).filter(j=>j>=0);
+  const fresh=focuses.filter(j=>!usedKanji.has(arr[j]));
+  const pick=(fresh.length?fresh:focuses),focus=pick[Math.floor(Math.random()*pick.length)];
+  rounds.push({...chosen,focus});usedWords.add(chosen.word);usedKanji.add(arr[focus]);
+ }
+ run.bossLast.push(...rounds.map(b=>b.word));if(run.bossLast.length>10)run.bossLast=run.bossLast.slice(-10);
+ const limitMs=bossLimitMs(length,run.mode);
+ return {number,length,rounds,progress:0,completed:[],total:stages,limitMs,remainingMs:limitMs};
 }
 function startEncounter(){
  if(run.kind==='challenge'){
@@ -897,30 +945,36 @@ function startEncounter(){
  if(!boss&&!nextWord){endRun(false,true);return;}
  run.current=boss?{type:'boss',boss:getBoss()}:{type:'normal',w:nextWord};setQuestion();
 }
-function setQuestion(){let isBoss=run.current.type==='boss';let current=run.current;let w=isBoss?DB[[...current.boss.word][current.boss.targets[current.boss.progress]]]:current.w;
- question=w;selected=Array(w.parts.length).fill(null);blocked=false;bank=makeBank(w,maxBank());document.body.classList.toggle('boss-active',isBoss);stopIntro();
- $('modeBadge').textContent=run.kind==='challenge'?'🎯 苦手チャレンジ ・ 第'+(run.encounters+1)+'問':isBoss?'👹 BOSS '+run.current.boss.number+' ・ '+[...run.current.boss.word].length+'字熟語':'⚔️ BATTLE '+(run.encounters+1);
+function setQuestion(){let isBoss=run.current.type==='boss';let current=run.current;
+ const stage=isBoss?current.boss.rounds[current.boss.progress]:null;
+ let w=isBoss?DB[[...stage.word][stage.focus]]:current.w;
+ question=w;selected=Array(w.parts.length).fill(null);blocked=false;
+ const bossMin=isBoss?(current.boss.length===4?22:18):0;
+ bank=makeBank(w,isBoss?Math.max(bossMin,maxBank()):maxBank());
+ document.body.classList.toggle('boss-active',isBoss);stopIntro();
+ $('modeBadge').textContent=run.kind==='challenge'?'🎯 苦手チャレンジ ・ 第'+(run.encounters+1)+'問':isBoss?'👹 BOSS '+run.current.boss.number+' ・ '+(current.boss.length===4?'四字':'二字')+'熟語 '+(current.boss.progress+1)+'/'+current.boss.total:'⚔️ BATTLE '+(run.encounters+1);
  $('modeBadge').classList.toggle('boss',isBoss);
- $('difficultyText').textContent=run.kind==='challenge'?'部品候補 '+bank.length+' 個・'+NORMAL_SECONDS[run.mode]+'秒': '部品候補 '+bank.length+' 個・'+(isBoss?'20':NORMAL_SECONDS[run.mode])+'秒・'+(SCORE_MULTIPLIER10[run.mode]/10).toFixed(1)+'倍';
+ $('difficultyText').textContent=run.kind==='challenge'?'部品候補 '+bank.length+' 個・'+NORMAL_SECONDS[run.mode]+'秒':'部品候補 '+bank.length+' 個・'+(isBoss?Math.round(current.boss.limitMs/1000):NORMAL_SECONDS[run.mode])+'秒・'+(SCORE_MULTIPLIER10[run.mode]/10).toFixed(1)+'倍';
  $('bossWordBlock').hidden=!isBoss;
- if(isBoss){const b=current.boss;const arr=[...b.word],at=b.targets[b.progress];
-   $('wordSlots').innerHTML=arr.map((c,i)=>{const t=b.targets.indexOf(i);return `<div class="wordCell ${t<0?'given':t<b.progress?(b.completed[t]?'solved':'failed'):t===b.progress?'current':''}">${t<0||t<b.progress?c:'？'}</div>`}).join('');
-   $('bossMeaning').textContent=`「${b.reading}」── ${b.meaning}（灰色の字は練習帳の範囲外）`;
-   $('questTitle').textContent=`第${at+1}文字を作れ！`;
-   $('cue').textContent=`${b.reading} ｜ ${at+1}文字目「${b.per[at]}」`;
-   $('questionContext').textContent=`${arr.length}字熟語：練習帳の${b.total}字だけを組み立てる（${b.progress+1}/${b.total}）`;
-   $('enemyEmoji').textContent=arr.length===4?'🐉':'👹';$('enemyName').textContent=arr.length+'字熟語のボス';
-   $('enemyDescription').textContent='熟語全体で20秒。灰色の文字は完成済み。出題字を間違えるとHP−1。';
+ if(isBoss){const b=current.boss;const arr=[...stage.word],at=stage.focus;
+   $('wordSlots').innerHTML=Array.from({length:b.total},(_,i)=>`<span class="bossStage ${i<b.progress?(b.completed[i]?'pass':'miss'):i===b.progress?'on':''}">${i<b.progress?(b.completed[i]?'✓':'×'):i===b.progress?'⚔':'●'}</span>`).join('');
+   $('bossMeaning').textContent=stage.meaning;
+   $('questTitle').textContent=`第${b.progress+1}問（全${b.total}問）`;
+   // Example: 諸行無常 -> しょ行無常 when 諸 is the active target.
+   // All other word characters are actual kanji, never their readings.
+   $('cue').innerHTML=arr.map((c,i)=>i===at?`<span class="targetReading">${stage.per[at]}</span>`:c).join('');
+   $('questionContext').textContent=`${stage.reading} / ${b.progress+1}つ目の熟語：${stage.meaning}`;
+   $('enemyEmoji').textContent=b.length===4?'🐉':'👹';$('enemyName').textContent=b.length+'字熟語の連戦ボス';
+   $('enemyDescription').textContent=`${b.total}熟語に連続挑戦。共有制限時間${Math.round(b.limitMs/1000)}秒！`;
  }else{$('questTitle').textContent='この言葉の漢字を作れ！';$('cue').textContent=w.cue;$('questionContext').textContent='正しい部品を選んで、漢字を組み立てよう。';$('enemyEmoji').textContent=run.kind==='challenge'?'🎯':['👾','🐺','🦇','🪨','👻','🐙'][run.encounters%6];$('enemyName').textContent=run.kind==='challenge'?'苦手克服クエスト':'ことばモンスター';$('enemyDescription').textContent=run.kind==='challenge'?'異なる3字を連続正解で報酬獲得。苦手な漢字を優先するよ！':'部品を選ぶと組み上がり、完成すると正しい漢字になる！'}
  $('buildLabel').textContent='漢字の形に部品を配置しよう';
  cancelAutoNext();$('cue').hidden=false; $('feedback').hidden=true;$('feedback').classList.remove('wrong');
  $('clearBtn').disabled=true;
- // The last piece automatically completes and judges the character.
  const bossIntro=isBoss&&run.current.boss.progress===0;
  if(bossIntro)blocked=true;
  renderSlots();renderBank();updateHud();
- if(bossIntro){stopTimer();paintTimer(BOSS_MS);$('timerBox').classList.remove('urgent','expired','done');
-  showFx('boss','👹','ボスの出現！',`${[...run.current.boss.word].length}字熟語 · 制限時間20秒`,1600);
+ if(bossIntro){stopTimer();paintTimer(current.boss.limitMs);$('timerBox').classList.remove('urgent','expired','done');
+  showFx('boss','👹','ボスの出現！',`${current.boss.total}つの熟語を連続攻略 · 制限時間${Math.round(current.boss.limitMs/1000)}秒`,1600);
   introTimeout=setTimeout(()=>{introTimeout=null;if(!run||run.current.type!=='boss')return;blocked=false;renderBank();updateCheck();startTimer()},1650);
  }else startTimer()}
 function makeBank(w,count){
@@ -1146,7 +1200,7 @@ function attempt(kind='submit'){if(!run||blocked)return;
  if(run.kind==='survival'&&run.score>saveData.best){saveData.best=run.score}persist();
  if(isBoss)run.current.boss.completed.push(good);
  if(run.kind==='survival'&&run.solvedChars.length===WORDS.length){
-   run.encounters++;run.pending='fullClear';
+   run.encounters++;run.pending='fullClear';registerPerfectClear();
    showFx('grandclear','🏆','おめでとう！','全30字コンプリート！ '+moneyLabel(run.correct)+'達成！',2600);
    box.querySelector('.feedbackStatus').innerHTML='🎊 30字ぜんぶ正解！ <span>完全クリア！</span>';
  }else if(run.hp===0){run.pending='gameover';}
@@ -1210,9 +1264,9 @@ function endRun(quit,fullClear=false){
   $('finalCorrect').textContent=run.correct;
   $('finalBoss').textContent=run.bossDefeated;
   $('result').querySelector('#finalBoss').nextElementSibling.textContent='撃破したボス';
-  $('recordMessage').textContent=fullClear?'🎉 第1期の30字をすべて正解しました！'+(run.unlocks.length?' 🔓'+run.unlocks.map(m=>modeLabel(m)).join('・')+'解放！':''):run.unlocks.length?('🔓 '+run.unlocks.map(m=>modeLabel(m)).join('・')+'を解放！ 一度解放したらずっと遊べます。'):run.day!==todayRecord().date?'日付が変わりました。前日の挑戦として記録しました。':(run.correct>run.baselineDaily?'🏅 今日の最高記録を更新！':'本日の最高記録は '+todayRecord().bestCorrect+'問正解');
+  $('recordMessage').textContent=fullClear?'🎉 第1期の30字をすべて正解しました！'+(run.unlocks.length?' 🔓'+run.unlocks.map(m=>modeLabel(m)).join('・')+'解放！':''):run.unlocks.length?('🔓 '+run.unlocks.map(m=>modeLabel(m)).join('・')+'を解放！ クリアした難易度は卒業し、次へ進みます。'):run.day!==todayRecord().date?'日付が変わりました。前日の挑戦として記録しました。':(run.correct>run.baselineDaily?'🏅 今日の最高記録を更新！':'本日の最高記録は '+todayRecord().bestCorrect+'問正解');
   $('result').classList.toggle('newRecord',newRecord);
-  $('weakReview').textContent=fullClear?'全30字の正解を達成！'+(run.weakHistory.length?' やり直した漢字：'+unique(run.weakHistory).join('・')+'。':' 次は難しいモードにも挑戦しよう！'):run.weakHistory.length?'今回の苦手な漢字：'+unique(run.weakHistory).slice(0,12).join('・')+'。次の冒険で確認しよう。':'今回は全問正解！ この調子で挑戦しよう。';
+  $('weakReview').textContent=fullClear?'全30字の正解を達成！'+(run.weakHistory.length?' やり直した漢字：'+unique(run.weakHistory).join('・')+'。':' 次の難易度に進もう！'):run.weakHistory.length?'今回の苦手な漢字：'+unique(run.weakHistory).slice(0,12).join('・')+'。次の冒険で確認しよう。':'今回は全問正解！ この調子で挑戦しよう。';
   $('retryBtn').textContent='⚔️ もう一度挑戦';
  }
  persist();activateScreen('result');updateHome();
@@ -1221,7 +1275,7 @@ $('startBtn').onclick=()=>startRun('survival');$('challengeBtn').onclick=()=>sta
 $('clearBtn').onclick=()=>{if(blocked)return;selected.fill(null);renderSlots();renderBank()};
 $('exitBtn').onclick=()=>{if(window.confirm('今回の冒険を終了して結果を表示しますか？'))endRun(true)};
 document.querySelectorAll('.diff').forEach(btn=>btn.onclick=()=>{if(!levelUnlocked(btn.dataset.level))return;level=btn.dataset.level;renderDifficultyChoices();});
-$('exportBtn').onclick=()=>{const blob=new Blob([JSON.stringify({...saveData,version:10,featureVersion:'20-beta5'},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='漢字サバイバル_学習記録_週間台帳付き.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000)};
+$('exportBtn').onclick=()=>{const blob=new Blob([JSON.stringify({...saveData,version:10,featureVersion:'20-release1'},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='漢字サバイバル_学習記録_週間台帳付き.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000)};
 $('importBtn').onclick=()=>$('importFile').click();
 $('importFile').onchange=async e=>{
  const f=e.target.files[0];if(!f)return;
@@ -1251,6 +1305,8 @@ $('importFile').onchange=async e=>{
   if(o.version===9||o.version===10){
     // Import today's history and, when present, permanent difficulty unlock progress.
     if(o.difficultyBest&&typeof o.difficultyBest==='object'){for(const mode of ['normal','hard','expert'])saveData.difficultyBest[mode]=Math.max(0,saveData.difficultyBest[mode]||0,Number(o.difficultyBest[mode])||0);}
+    if(o.difficultyClears&&typeof o.difficultyClears==='object'){saveData.difficultyClears.normal ||= !!o.difficultyClears.normal;saveData.difficultyClears.hard ||= !!o.difficultyClears.hard;}else {if(Number(o.difficultyBest?.normal)>=WORDS.length)saveData.difficultyClears.normal=true;if(Number(o.difficultyBest?.hard)>=WORDS.length)saveData.difficultyClears.hard=true;}
+    if(saveData.difficultyClears.hard)saveData.difficultyClears.normal=true;
     const today=todayRecord();
     if(o.daily?.date===today.date && Number.isInteger(o.daily.bestCorrect)&&o.daily.bestCorrect>today.bestCorrect){
       today.bestPoints10=Math.max(0,Number(o.daily.bestPoints10)||0);
